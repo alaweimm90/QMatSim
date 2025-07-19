@@ -1,0 +1,81 @@
+############################ I/O ############################ 
+# Reading from files
+UseStructFile					true				# Read the lattice structure information from SystemLabel.STRUCT_IN structure file {default = false}
+MD.UseSaveCG					true 				# Read the CG history information stored in SystemLabel.CG {deefault = false}
+MD.UseSaveXV					false 				# Read the XV history information stored in SystemLabel.XV {default = false}
+ON.UseSaveLWF 					false 				# Read the LWF history information stored in SystemLabel.LWF {default = false}
+
+DM.UseSaveDM 					true				# Read the density matrix information stored in SystemLabel.DM  {default = false}
+DM.FormattedFiles 				false 				# Instructs to use formatted files for reaing and writing the density matrix {default = false}
+DM.FormattedInput  				false 				# Instructs to use formatted files for reading the density matrix {default = false}
+DM.FormattedOutput 				false 				# Instructs to use formatted files for writing the density matrix {default = false}
+
+# DM and H matrices
+Write.DM 						true 				# Write the density matrix into SystemLabel.DM {default = true}
+Write.DM.end.of.cycle 			true 				# Write the denisty matrix only at the end of each SCF step {default = true}
+
+Write.H 						false 				# Write the Hamiltonian matrix into SystemLabel.H {default = false}
+Write.H.end.of.cycle 			false 				# Write the Hamiltonian matrix only at the end of each SCF step {default = false}
+
+Use.Blocked.WriteMat 			false 				# Use blocks of orbitals to speed up the I/O of the sparse-matrix {default = false}
+
+# General
+WriteForces						false				# Write the atomic forces at every MD step or relaxation step into the output file siste.out {default = false}
+WriteKpoints					true				# Write the coordinates of the k-vectors used in the grid for k-sampling into the output file siste.out {default = false}
+WriteCoorInitial				true				# Write the initial coordinates into the output file siste.out {default = false}
+WriteCoorStep					false 				# Write the coordinates at every MD step or relaxation step into the output file siste.out {default = false}
+WriteEigenvalues				false				# Write the Hamiltonian eigenvalues for the sampling k-points into the output file siste.out {default = false}
+
+# Charge density
+AnalyzeChargeDensityOnly 		false 				# Generate charge density files and computes partial atomic charges (Hirshfeld, Voronoi, Bader) {default = false} 
+SaveInitialChargeDensity		false				# Write the charge density information into SystemLabel.RHOINIT {default = false} 
+SaveRho 						true 				# Write the valence pseudocharge density into SystemLabel.RHO {default = false}	
+SaveDeltaRho  					true				# Write the deformation valence pseudocharge density into SystemLabel.DRHO {default = false}
+SaveRhoXC  						true				# Write the valence pseudocharge density + nonlocal core corrections into SystemLabel.RHOXC {default = false}
+SaveIonicCharge 				true				# Write the soft diffuse ionic charge density into SystemLabel.IOCH {default = false}
+SaveTotalCharge 				true				# Write the total charge density into SystemLabel.TOCH {default = false}
+SaveBaderCharge					true				# Write the Bader charge density into SystemLabel.BADER {default = false}
+
+# Potential
+SaveElectrostaticPotential		true				# Write the total potential into SystemLabel.VH {default = false}
+SaveNeutralAtomPotential		true				# Write the neutral-atom potential into SystemLabel.VNA {default = false}
+SaveTotalPotential				true				# Write the total effective potential into SystemLabel.VT {default = false}
+
+# Bands
+WriteKbands						false				# Write the coordinates of the k-vectors defined for band plotting into siesta.out {default = false}
+WriteBands  					false               # Write the Hamiltonian eigenvalues corresponding to the k-vectors defined for band plotting into siesta.out {default = false}
+WFS.Write.For.Bands 			false               # Write the wave functions associated to the bands specified by BandLines or a BandPoints into SystemLabel.WFSX {default = false}
+
+# Wavefunctions/orbitals
+WriteWaveFunctions				false				# Write the selected wavefunctions information into SystemLabel.selected.WFSX {default = false}
+WriteOrbitalIndex				true 				# Write the orbitals used in the calculations into SystemLabel.ORB_INDX {default = false}
+
+# Other
+LongOutput						false				# Write the long output (k-points, bands, coordinates, forces, eigenvalues, wavefunctions, and Mulliken population) {default = false}
+
+WriteDenchar					true				# Write information needed by Util/Denchar {default = false}
+COOP.Write 						true				# Write the information needed by Util/COOP/mprop {default = false}
+
+WriteCoorXmol					false				# Write the final atomic coordinates [A] into SystemLabel.XYZ {default = false}
+WriteCoorCerius 				false				# Write the final atomic coordiantes in fractional format into SystemLabel.XTL {default = false}
+
+WriteMDHistory					false				# Write the molecular dynamics trajectory into SystemLabel.MD {default = false}
+WriteMDXMol						false				# Write the atomic coordinates [A] of every MD step for animation into SystemLabel.ANI {default = false}
+
+SaveHS 							false				# Write the number of spin components, orbitals, as well as Hamiltonian and overlap matrices into SystemLabel.HSX {default = false}
+
+SpinInSCF						false 				# Write the size and components of the total spin polarization at every SCF step into siesta.out {default = true}
+
+# Charge populations 
+WriteMullikenPop 				1					# Determine the level of Mulliken population analysis printed (0, 1, 2, 3) {default = 0}
+MullikenInSCF					false				# Write the Mulliken populations for every SCF step at level specified in WriteMullikenPop into siesta.out {default = false}
+
+WriteHirshfeldPop				false				# Write the Hirshfeld "net" atomic populations on each atom in the system after the last step of SCF into siesta.out {default = false}
+
+WriteVoronoiPop 				false 				# Write the Voronoi "net" atomic populations on each atom in the system after the last step of SCF into siesta.out {default = false} 
+
+PartialChargesAtEveryGeometry   false 				# Write the Hirshfeld and Voronoi populations after each SCF is achieved, for all geometry steps, into siesta.out {default = false}
+PartialChargesAtEverySCFStep    false 				# Write the Hirshfeld and Voronoi populations for each SCF step into siesta.out {default = false}
+
+# Memory & CPU time
+AllocReportLevel 				0 					# Set the level of the allocation report {default = 0}

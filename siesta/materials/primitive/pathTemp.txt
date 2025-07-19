@@ -1,0 +1,2 @@
+%block BandLines                                                                        # Specify the lines along which band energies are calculated
+%endblock BandLines

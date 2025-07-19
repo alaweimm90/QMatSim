@@ -1,0 +1,5 @@
+%block PDOS.kgrid_Monkhorst_Pack 					# Construct the Monkhorst-Pack k-point sampling matrix for PDOS calculation
+	90   0   0   0.5
+	0   5   0   0.0
+	0   0   1   0.0
+%endblock PDOS.kgrid_Monkhorst_Pack

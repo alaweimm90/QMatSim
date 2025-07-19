@@ -1,0 +1,8 @@
+%block ProjectedDensityOfStates                                 # Write the DOS and PDOS on the basis orbtials betwee E1, E2, using sigma width & Npoints
+                                E1PDOSVAR        E2PDOSVAR    sigmaVAR   NpointsVAR      eV
+%endblock ProjectedDensityOfStates
+
+#WFS.Band.Min                                    WFSBandMinVAR                                   # Specify the lowest band index of the wave functions for each k-point
+#WFS.Band.Max                                    WFSBandMaxVAR                                   # Specify the highest band index of the wave functions for each k-point
+#WFS.Energy.Min                                  WFSEMinVAR eV                                      # Specify the lowest band energy
+#WFS.Energy.Max                                  WFSEMaxVAR eV                                    # Specify the highest band energy
