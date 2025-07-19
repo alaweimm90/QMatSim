@@ -1,7 +1,3 @@
-Here is your **finalized `README.md`**, updated and properly formatted for GitHub with live CLI examples, testing instructions, and citation metadata. You can copy this directly to your `README.md` file:
-
----
-
 ```markdown
 # QMatSim: Multiscale DFT + MD Simulation Framework
 
