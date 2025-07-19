@@ -1,0 +1,9 @@
+############################ DOS ############################
+%block LocalDensityOfStates							# Write the local DOS
+				E1VAR 	  E2VAR     eV
+%endblock LocalDensityOfStates
+
+#WFS.Band.Min                                    WFSBandMinVAR                                   # Specify the lowest band index of the wave functions for each k-point
+#WFS.Band.Max                                    WFSBandMaxVAR                                   # Specify the highest band index of the wave functions for each k-point
+#WFS.Energy.Min                                  WFSEMinVAR eV                                      # Specify the lowest band energy
+#WFS.Energy.Max                                  WFSEMaxVAR eV                                    # Specify the highest band energy

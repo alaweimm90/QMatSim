@@ -1,0 +1,147 @@
+# K-GRID BLOCK
+
+kgrid_cutoff        			0 Bohr 				# k-grid cutoff {default = 0 Bohr}
+ChangeKgridInMD					false 				# Recompute k-point grid at every iteration during MD runs that potentially change the unit cell: Parrinello-Rahman, Nose-Parrinello-Rahman, and Anneal {default = false}
+TimeReversalSymmetryForKpoints  true 				# Impose time-reversal symmetry (k=-k)
+
+
+############################ Real-space grid and the eggbox effect ############################ 
+MeshCutoff                      EcutoffVAR Ry              # The plane wave cutoff for the grid {default = 300 Ry}
+Mesh.SubDivisions 				4 					# Number of sub-mesh points in each direction used to save index storage on the mesh {default = 2}
+
+
+############################ Occupation of electronic states and E_F ############################ 
+OccupationFunction              foccupVAR                  # Electronic occupation function (FD, MP) {default = FD}
+ElectronicTemperature           TelecVAR K               # Electronic temperature T_e of the distribution {default = 300 K}
+
+
+############################ Pseudo-atomic orbitals basis ############################
+PAO.BasisSize                   basisSizeVAR           # Basis size (# of orbitals/atom) (SZ, DZ, SZP, DZP) {default = DZP}
+
+PAO.EnergyShift					0.02 Ry 			# Range of first zeta (energy shift deltaE to determine ALL cutoff radii r_c's of each orbital) {default = 0.02 Ry = 272.114 meV}
+
+PAO.BasisType					split 				# Second zeta type (split, splitgauss, nodes, nonodes, filteret) {default = split}
+PAO.SplitNorm 					0.15				# Range of second zeta (matching radius r_m) {default = 0.15}
+
+PAO.SoftDefault 				false           	# Confinement option {default = false}
+PAO.SoftInnerRadius 			0.9					# Inner radius for soft confinement (r_i) {default = 0.9}
+PAO.SoftPotential 				40 Ry 				# Prefactor for soft confinement (V_0) {default = 40 Ry}
+
+
+############################ XC functional ############################
+XC.Functional                   functionalVAR                 # E_{XC} type (LDA, GGA, VDW) {default = LDA}
+XC.Authors                      authorsVAR                 # Particular parametrization of E_{XC} {default = PZ}
+
+
+############################ Spin polarization ############################
+Spin                                                    spinVAR                   # Inclusion of spin (non-polarized, polarized, non-collinear, spin-orbit) {default = non-polarized}
+Spin.Fix                                                false                           # Fixed spin values as defined by Spin.Total for collinear spin {default = false}
+Spin.Total                                              0.0                                     # Value of the imposed total spin polarization of the system (in units of 1/2) {deult = 0.0}
+SingleExcitation				false		    	# Calculate a rough approximation to the lowest excited state {default = false}
+
+DM.InitSpin.AF 					false 				# Define the initial spin density for a spin polarized calculation {default = false}
+
+
+############################ Density matrix  ############################
+DM.AllowReuse 					true 				# Reuse the density matrix from previous geometry iterations to start the new geometry's SCF cycle {default = true}
+
+DM.AllowExtrapolation 			true 				# Extrapolate the density matrix from previous geometry iterations to start the new geometry's SCF cycle {default = true}
+DM.History.Depth 				1					# Set the number of geometry steps for which the density matrix is saved for extrapolation {default = 1}
+
+DM.Init.Unfold 					true 				# Unfold the Gamma-only density matrix to the auxiliary supercell elements {default = true}
+
+
+############################ Self-consistent field (SCF) ############################
+Harris.functional				false				# Use non self-consistent Harris functional, otherwise use the fully self-consistent KS functional {default = false}
+
+MinSCFIterations                minSCFVAR           # Minimum number of SCF iterations per time step {default = 0}
+MaxSCFIterations                maxSCFVAR           # Maximum number of SCF iterations per time step {default = 1000}
+SCF.MustConverge                SCFMustConvergeVAR 				# Stop if convergences is not rechaed in the maximum number of SCF iterations {default = true}
+
+SCF.Mix							Hamiltonian 		# Mixed physical quantity (Hamiltonian, density, charge) {default = Hamiltonian}
+SCF.Mix.Spin 					all					# Mixing in spin-polarized calculations (all, spinor, sum, sum+diff) {default = all}
+SCF.Mixer.Method                methodVAR           # Mixing algorithm (Linear, Pulay, Broyden) {default = Linear}
+SCF.Mixer.Variant               variantVAR          # Variant of the mixing method (original, GR) {default = original}
+SCF.Mixer.Weight                weightVAR                 # Mixing weight {default = 0.25}
+SCF.Mixer.History				4				# Number of previous SCF steps used in estimating the following input {default = 2}
+
+SCF.Pulay.UseSVD                true                # Use the more robust SVD algorithm instead of direct matrix inversion to perform the DIIS extrapolation {default = false}
+
+SCF.Mix.First					true 				# Mix at first step {default = true}
+SCF.Mix.First.Force 			false 				# Force mixing at first step, regardless of what SIESTA decides {default = false} 
+SCF.Mix.AfterConvergence  		false 				# Mix at last SCF cycle, i.e.after convergence has been achieved {default = false}
+SCF.RecomputeHAfterSCF  		false 				# Update the Hamiltonian matrix after the SCF cycle while computing energy, forces, and stresses {default = false}
+
+SCF.Mixer.Kick 					50 					# After this number of steps, insert a linear mix to "kick" the SCF cycle out of possible local minimum {default = 0} 
+SCF.Mixer.Kick.Weight           0.1           # The mixing weight for the linear kick (if used)
+
+SCF.Mixer.Restart				0				# For advanced mixers (Pulay and Broyden), the mixing scheme may periodically restart the history {default = 0}
+SCF.Mixer.Restart.Save          0          # When restarting the history of saved SCF steps, one may choose to save a subset of the latest history steps {deault = 0}
+
+SCF.Mixer.Linear.After          -1                  # After reaching convergence, one may run additional SCF cycles using a linear mixing scheme if value >=0 {default = -1}
+SCF.Mixer.Linear.After.Weight 	0					# The mixing weight for the linear mixing scheme of SCF.Mixer.Linear.After (if used)
+
+SCF.DM.Converge                 DMConvVAR                # Use the density matrix elements as monitor of self-consistency {default = true}
+SCF.DM.Tolerance                DMtolVAR                # Tolerance of the density matrix {default = 10-4}
+DM.Normalization.Tolerance 		1e-5				# Tolerance for unnormalized density matrices (typically product of PEXSI and similar) {default = 1e-5}
+
+SCF.H.Converge                  HConvVAR                # Use the Hamiltonian matrix elements as monitor of self-consistency {default = true}
+SCF.H.Tolerance                 HtolVAR eV             # Tolerance of the Hamiltonian matrix {default = 10-3 eV}
+
+SCF.EDM.Converge                EDMConvVAR                # Use the energy density matrix elements as monitor of self-consistency {default = true}
+SCF.EDM.Tolerance               EDMtolVAR eV             # Tolerance of the energy density matrix {default = 10-3 eV}
+
+SCF.FreeE.Converge 				false  				# Use the total free energy as monitor of self-consistency {default = false}
+SCF.FreeE.Tolerance 			1e-4 eV 			# Tolerance of the total free energy {default = 10-4 eV}
+
+SCF.Harris.Converge				false  				# Use the Harris energy as monitor of self-consistency {default = false}
+SCF.Harris.Tolerance 			1e-4 eV				# Tolerance of the Harris energy {default = 10-4 eV}
+
+
+############################ Structural relaxation ############################ 
+MD.TypeOfRun					CG 					# Specify the MD type of run (CG, Broyden, FIRE, Verlet, Nose, ParrinelloRahman, NoseParrinelloRahman, Anneal, FC, Master|Forces, Lua) {default = CG}
+MD.Steps                        MDstepsVAR                 # Maximum number of steps in a minimization routine {default = 0} 
+MD.MaxDispl                     MaxDisplVAR Bohr         # Maximum atomic displacement in an optimization step {default = 0.2 Bohr ~ 0.1 Ang} 
+
+MD.VariableCell                 variableCellVAR                # Relax unit cell + atomic coordinates when using CG, Broyden, or FIRE {default = false} 
+MD.PreconditionVariableCell 	5 Ang 				# A length to multiply to the strain components in a variable-cell optimization {default = 5 Ang}
+Constant.Volume 				false 				# Keep V_cell = constant in a variable-cell relaxation, and vary the shape & atomic coordinates only when using CG, Broyden, or FIRE {default = false}
+Target.Pressure                 PressureVAR GPa         # Target pressure for variable-cell optimizations, Parrinello-Rahman method, and annealing options {default = 0 GPa} 
+
+MD.RelaxCellOnly 				false 				# Relax unit cell only when using Broyden or FIRE {default = false}
+
+MD.MaxForceTol                  FtolVAR eV/Ang         # Force tolerance in coordinate optimization {default = 0.04 eV/Ang}
+MD.MaxStressTol                 MaxStressTolVAR GPa         # Stress toerance in variable-cell CG optimization {default = 1 GPa}
+
+
+############################ Solution method ############################ 
+SolutionMethod					diagon 				# Specify the solution method (diagon, OMM, OrderN, transiesta, PEXSI) {default = diagon}
+
+# diagon options
+Diag.Algorithm					divide-and-Conquer  # Specify the algorithm when calculating the eigenvalues and/or eigenvectors (divide-and-Conquer, divide-and-Conquer-2stage, MRRR, MRRR-2stage, expert, expert-2stage, noexpert|QR, noexpert-2stage|QR-2stage, ELPA-1stage, ELPA|ELPA-2stage) {default = divide-and-Conquer}
+Diag.ParallelOverK				false 				# Parallelise over the k-points and not the orbitals {default = false}
+Diag.AbsTol 					1e-16				# Tolerance for the orthogonality of the eigenvectors for MRRR algorithm "for serial solver" or expert algorithm "for serial/parallel solver" {default = 1e-16}
+DiagOrFac 						1e-3				# Re-orthoganalization factor to determine when the eigenvectors should be re-orthogonalized for expert algorithm "for serial/parallel solver" {default = 1e-3}
+Diag.Memory 					1					# Allows user to increase the memory available to achieve successful diagnolization {default = 1}
+Diag.UpperLower 				Lower 				# Select which part of the symmetric triangular part should be used in the solvers (Lower, Upper)
+
+# Parallel options 
+#ProcessorY						6					# Specify the dimension of the processor grid in the y-direction {default = 6}                      
+#BlockSize						1					# Specify the number of consectuive orbitals which are lockated on a goven processor before moving to the next one {default = 1}
+
+# Efficiency options
+DirectPhi 					    true 				# Calculate the orbital values on the fly (rather than storing and using) {default = false}
+SaveMemory 						false 				# Control whether the program uses algorithm which save memory at the expense of CPU time by not preserving the contents of arrays {default = false}
+#NumberOfEigenStates				18					# Specify the number of eigenstates that are calculated from the maximum possible {default = all orbitals}
+
+
+# BANDS BLOCK 
+
+# PDOS BLOCK 1
+
+# PDOS BLOCK 2
+
+# LDOS BLOCK
+
+# I/O BLOCK
+

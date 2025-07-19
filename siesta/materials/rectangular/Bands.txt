@@ -1,0 +1,25 @@
+############################ Bandstructure analysis ############################
+BandLinesScale    ReciprocalLatticeVectors  		# Scale of the k-vectors given in BandLines and BandPoints (pi/a, ReciprocalLatticeVectors)
+
+%block BandLines 									# Specify the lines along which band energies are calculated
+		1  	    0.0000  0.0000  0.0000      \Gamma
+		NkL1VAR  	0.5000  0.0000  0.0000  	X
+	        NkL2VAR 	0.5000  0.5000  0.0000  	S
+		NkL3VAR  	0.0000  0.5000  0.0000  	Y
+	        NkL4VAR  	0.0000  0.0000  0.0000  	\Gamma						
+%endblock BandLines
+
+############################ Wavefunction analysis ############################
+#WaveFuncKPointsScale    ReciprocalLatticeVectors    # Scale of the k-vectors given in WaveFuncKPoints (pi/a, ReciprocalLatticeVectors)
+
+#%block 	WaveFuncKPoints 							# Specify the k-points for which electronic wave function coefficients are written
+#		0.0000  0.0000  0.0000 from WFSBandMinVAR to WFSBandMaxVAR       				
+#		0.5000  0.5000  0.0000 from WFSBandMinVAR to WFSBandMaxVAR  		
+#		0.5000  0.0000  0.0000 from WFSBandMinVAR to WFSBandMaxVAR  
+#		0.0000  0.5000  0.0000 from WFSBandMinVAR to WFSBandMaxVAR  					
+#%endblock WaveFuncKPoints
+
+#WFS.Band.Min                                    WFSBandMinVAR                                   # Specify the lowest band index of the wave functions for each k-point
+#WFS.Band.Max                                    WFSBandMaxVAR                                   # Specify the highest band index of the wave functions for each k-point
+#WFS.Energy.Min                                  WFSEMinVAR eV                                      # Specify the lowest band energy
+#WFS.Energy.Max                                  WFSEMaxVAR eV                                    # Specify the highest band energy

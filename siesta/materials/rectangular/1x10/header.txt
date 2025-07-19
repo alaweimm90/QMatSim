@@ -1,0 +1,24 @@
+############################ System description ############################
+SystemName    MoS2 Monolayer                                                        # Descriptive name of the system {default = "blank"}
+SystemLabel    MoS2                                    # Label for naming output files {default = siesta}
+
+############################ Material description ############################
+NumberOfSpecies                    2                    # Number of different atomic species {MANDATORY}
+NumberOfAtoms                     NumberOfAtomsVAR                    # Number of atoms in the simulation {MANDATORY}
+
+
+%block ChemicalSpeciesLabel                            # Specify the different chemical species: index, atomic number (Z), label {MANDATORY}
+1         42         Mo
+2         16         S
+%endblock ChemicalSpeciesLabel
+
+
+%block AtomicMass                                     # Specify the species atomic massess: index, atomic mass (m_a [Da]) {default = natural masses}
+    1          95.95
+    2          32.06
+%endblock AtomicMass
+
+%block Geometry.Constraints
+     cell-vector B
+     cell-vector C
+%endblock Geometry.Constraints
