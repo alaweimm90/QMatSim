@@ -1,54 +1,47 @@
-````markdown
 # **QMatSim: Multiscale DFT + MD Simulation Framework**
 
-**QMatSim** is a modular and extensible multiscale simulation toolkit that integrates **Density Functional Theory (DFT)** and **Molecular Dynamics (MD)**. It combines **SIESTA** and **LAMMPS** workflows, providing support for flexible supercell geometries, strain-driven pipelines, and unified postprocessing across **Python**, **MATLAB**, and **Mathematica**.
+**QMatSim** is a modular simulation toolkit that integrates **Density Functional Theory (DFT)** and **Molecular Dynamics (MD)** using **SIESTA** and **LAMMPS**. It supports customizable supercells, strain-driven pipelines, SLURM integration, and unified postprocessing across **Python**, **MATLAB**, and **Mathematica**.
 
 ---
 
-## 🚀 **Key Features**
+## 🚀 Features
 
-- **Unified CLI**: Single entry point (`qmatsim`) for all simulation stages.
-- **Modular Workflows**: SIESTA and LAMMPS workflows for customization.
-- **Supercell & Strain Simulation**: Template-based for simplicity.
-- **SLURM Job Integration**: Auto-generated input decks for easy cluster submission.
-- **Unified Postprocessing**: Includes band flattening, LDOS, stress-strain analysis.
-- **Cross-Platform Postprocessing**: Supports **MATLAB**, **Mathematica**, and **Python**.
-- **Easy Installation**: Installable via Python package (`pip install .`).
+- **Unified CLI** — Single command-line tool: `qmatsim`
+- **Modular Workflows** — Customizable DFT (SIESTA) and MD (LAMMPS) pipelines
+- **Supercell + Strain Templates** — Auto-configured lattice deformation setups
+- **Cluster-Ready** — Auto-generates SLURM input decks
+- **Cross-Platform Postprocessing** — MATLAB, Python, and Mathematica supported
+- **Unified Analysis** — LDOS, band flattening, stress-strain, and energy tracking
+- **Easy Installation** — `pip install .`
 
 ---
 
-## 📦 **Project Structure**
+## 🧱 Project Structure
 
 ```plaintext
 QMatSim/
-├── qmatsim/           # Python package
-│   ├── main.py        # CLI logic (entry point)
-│   └── __init__.py    # Package marker
-│
-├── scripts/           # Bash automation for DFT, MD, postprocessing
-├── siesta/            # Materials, pseudopotentials, templates
-├── lammps/            # Data/in/potentials for LAMMPS
-│
-├── analysis.py        # Python-based postprocessing
+├── qmatsim/           # Core Python CLI
+│   ├── main.py
+│   └── __init__.py
+├── scripts/           # Automation scripts
+├── siesta/            # Templates, materials, pseudopotentials
+├── lammps/            # Potentials, data/in files
+├── analysis.py        # Python postprocessing
 ├── analysis.m         # MATLAB postprocessing
 ├── analysis.nb        # Mathematica postprocessing
-│
-├── tests/             # Minimal CLI test scaffolding
+├── tests/             # CLI testing
 │   └── test_cli.py
-│
-├── setup.py           # Install metadata
-├── pyproject.toml     # Build system configuration
-└── README.md          # This file
-````
+├── setup.py
+├── pyproject.toml
+└── README.md
+```
 
 ---
 
-## 🛠️ **Installation**
-
-Clone the repository and install the package in development mode:
+## 🛠️ Installation
 
 ```bash
-# Clone the repository
+# Clone the repo
 git clone https://github.com/alaweimm90/QMatSim.git
 cd QMatSim
 
@@ -56,41 +49,36 @@ cd QMatSim
 pip install -e .
 ```
 
-Once installed, the `qmatsim` command-line tool will be available globally.
+After installation, the `qmatsim` CLI will be globally available.
 
 ---
 
-## 🔧 **CLI Usage**
+## 🔧 Command-Line Usage
 
-### **DFT Relaxation (SIESTA)**
+### ➤ DFT Relaxation (SIESTA)
 
 ```bash
-# Relaxation with SIESTA for MoS2 material
 qmatsim relax --material MoS2 --structure 1x10_rectangular
 ```
 
-### **MD Simulation**
+### ➤ MD Minimization
 
 ```bash
-# Compress-only MD simulation
-qmatsim minimize --structure ripple10 --mode compress
-
-# Full sequence MD simulation
-qmatsim minimize --structure ripple10 --mode all
+qmatsim minimize --structure ripple10 --mode compress     # Compress-only
+qmatsim minimize --structure ripple10 --mode all          # Full sequence
 ```
 
-### **Postprocessing**
+### ➤ Postprocessing
 
 ```bash
-# Analyze MoS2 material
 qmatsim analyze --material MoS2 --structure 1x10_rectangular
 ```
 
 ---
 
-## ✅ **Testing**
+## ✅ Testing
 
-Run tests with **pytest**:
+Run test suite with:
 
 ```bash
 pytest tests/
@@ -98,15 +86,15 @@ pytest tests/
 
 ---
 
-## 📜 **License**
+## 📜 License
 
-This project is distributed under the **MIT License**. See the `LICENSE` file for more details.
+Distributed under the **MIT License**. See `LICENSE` for details.
 
 ---
 
-## 🧑‍💻 **Citation**
+## 🔖 Citation
 
-If you use **QMatSim** in your research, please cite it as follows:
+Please cite **QMatSim** using the following `CITATION.cff`:
 
 ```yaml
 cff-version: 1.2.0
@@ -123,13 +111,13 @@ date-released: 2025-07-19
 
 ---
 
-## 🧪 **Example Test: `tests/test_cli.py`**
+## 🧪 Example Test (`tests/test_cli.py`)
 
 ```python
 import subprocess
 
 def test_help_runs():
-    """Ensure the CLI help command runs successfully."""
+    """Check if `qmatsim --help` executes successfully."""
     result = subprocess.run(["python", "-m", "qmatsim", "--help"], capture_output=True, text=True)
     assert result.returncode == 0
     assert "QMatSim CLI" in result.stdout
