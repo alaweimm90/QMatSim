@@ -1,11 +1,11 @@
 # **QMatSim: Multiscale DFT + MD Simulation Framework**
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)  
-[![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/downloads/)  
-[![MATLAB](https://img.shields.io/badge/MATLAB-R2020b+-orange.svg)](https://www.mathworks.com/products/matlab.html)  
-[![Mathematica](https://img.shields.io/badge/Mathematica-12+-red.svg)](https://www.wolfram.com/mathematica/)  
-[![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen.svg)]()  
-[![Coverage](https://img.shields.io/badge/Coverage-92%25-brightgreen.svg)]()  
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![MATLAB](https://img.shields.io/badge/MATLAB-R2020b+-orange.svg)](https://www.mathworks.com/products/matlab.html)
+[![Mathematica](https://img.shields.io/badge/Mathematica-12+-red.svg)](https://www.wolfram.com/mathematica/)
+[![Build Status](https://img.shields.io/badge/Build-Passing-green.svg)]()
+[![Coverage](https://img.shields.io/badge/Coverage-92%25-brightgreen.svg)]()
 
 *A modular, cross-platform quantum materials simulation framework combining Density Functional Theory (DFT) and Molecular Dynamics (MD), with unified workflows across Python, MATLAB, and Mathematica.*
 
