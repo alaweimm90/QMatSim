@@ -2,6 +2,20 @@
 # === run-postprocessing.sh ===
 # Usage: ./run-postprocessing.sh <material> <structure>
 
+set -e  # Exit on error
+
+# Load configuration
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/config.sh"
+
+# Check for required arguments
+if [[ $# -lt 2 ]]; then
+    echo "Error: Missing required arguments"
+    echo "Usage: $0 <material> <structure>"
+    echo "Example: $0 MoS2 1x10_rectangular"
+    exit 1
+fi
+
 material="$1"
 structure="$2"
 type="Monolayer"

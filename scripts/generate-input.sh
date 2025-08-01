@@ -1,4 +1,13 @@
 #!/bin/bash
+# === generate-input.sh ===
+# Template script for SIESTA postprocessing
+# This script is generated from a template and should not be run directly
+
+set -e  # Exit on error
+
+# Load configuration
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/config.sh"
 
 shopt -s extglob
 shopt -s expand_aliases
@@ -133,7 +142,13 @@ maxz=$(<ExtractedParameters/maxz.out)
     cp ../../../1-Relaxation/${material}.PLD .
     cp ../../../3-Bands/${material}.bands.WFSX . ################ THIS SHOULD BE CHANGED LATER TO 3-BANDS ... I AM DOING THIS FOR TESTING SINCE SMALLER FILE
     mv ${material}.bands.WFSX ${material}.WFSX
-    cp ~/bin/denchar-serial .
+    if [[ -f "$DENCHAR_BIN" ]]; then
+        cp "$DENCHAR_BIN" .
+    elif command -v "$DENCHAR_EXE" >/dev/null 2>&1; then
+        ln -sf "$(command -v "$DENCHAR_EXE")" denchar-serial
+    else
+        echo "Warning: DENCHAR executable not found" >&2
+    fi
 
     cd ..
 
@@ -151,13 +166,24 @@ maxz=$(<ExtractedParameters/maxz.out)
     cp ../../../1-Relaxation/${material}.PLD .
     cp ../../../3-Bands/${material}.bands.WFSX . ################ THIS SHOULD BE CHANGED LATER TO 3-BANDS ... I AM DOING THIS FOR TESTING SINCE SMALLER FILE
     mv ${material}.bands.WFSX ${material}.WFSX
-    cp ~/bin/denchar-serial .
+    if [[ -f "$DENCHAR_BIN" ]]; then
+        cp "$DENCHAR_BIN" .
+    elif command -v "$DENCHAR_EXE" >/dev/null 2>&1; then
+        ln -sf "$(command -v "$DENCHAR_EXE")" denchar-serial
+    else
+        echo "Warning: DENCHAR executable not found" >&2
+    fi
 
     cd ..
 
     cd 3D
 
-cp ~/SIESTA/materials/$material/Monolayer/Utilities/$material-DENCHAR.fdf .
+denchar_template="$QMATSIM_SIESTA_DIR/materials/$material/Monolayer/Utilities/$material-DENCHAR.fdf"
+if [[ -f "$denchar_template" ]]; then
+    cp "$denchar_template" .
+else
+    echo "Warning: DENCHAR template not found: $denchar_template" >&2
+fi
 awk '/^#* k-point sampling / {exit} {print}' ../../../FILES/1-Relaxation.fdf > header.tmp
 cp $material-DENCHAR.fdf $material-DENCHAR.tmp
 cat header.tmp $material-DENCHAR.tmp > $material-DENCHAR.fdf
@@ -211,7 +237,12 @@ cd ..
 
 cd 2D
 
-cp ~/SIESTA/materials/$material/Monolayer/Utilities/$material-DENCHAR.fdf .
+denchar_template="$QMATSIM_SIESTA_DIR/materials/$material/Monolayer/Utilities/$material-DENCHAR.fdf"
+if [[ -f "$denchar_template" ]]; then
+    cp "$denchar_template" .
+else
+    echo "Warning: DENCHAR template not found: $denchar_template" >&2
+fi
 awk '/^#* k-point sampling / {exit} {print}' ../../../FILES/1-Relaxation.fdf > header.tmp
 cp $material-DENCHAR.fdf $material-DENCHAR.tmp
 cat header.tmp $material-DENCHAR.tmp > $material-DENCHAR.fdf
@@ -534,7 +565,13 @@ for directory in "${directories[@]}"; do
     mkdir -p Grids
     cd Grids
 
-    cp ~/SIESTA/Utilities/Python/cube2xyz.py .
+    if [[ -f "$CUBE2XYZ_SCRIPT" ]]; then
+        cp "$CUBE2XYZ_SCRIPT" .
+    elif [[ -f "$QMATSIM_SIESTA_DIR/python-utilities/cube2xyz.py" ]]; then
+        cp "$QMATSIM_SIESTA_DIR/python-utilities/cube2xyz.py" .
+    else
+        echo "Warning: cube2xyz.py script not found" >&2
+    fi
     cp ../$material.STRUCT_OUT .
     cp ../$material.LDOS .
 

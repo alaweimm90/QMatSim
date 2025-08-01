@@ -2,16 +2,26 @@
 # === compress-MD.sh ===
 # Usage: ./compress-MD.sh <structure>
 
-structure="$1"
-LAMMPS_EXE="lmp_mpi"
+set -e  # Exit on error
 
-if ! command -v "$LAMMPS_EXE" >/dev/null 2>&1; then
-    echo "Error: $LAMMPS_EXE not found in PATH" >&2
+# Load configuration
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/config.sh"
+
+# Check for required arguments
+if [ -z "$1" ]; then
+    echo "Error: Missing required structure argument"
+    echo "Usage: $0 <structure>"
+    echo "Example: $0 ripple10"
     exit 1
 fi
 
-if [ -z "$structure" ]; then
-    echo "Usage: ./compress-MD.sh <structure>"
+structure="$1"
+
+# Check for LAMMPS executable
+if ! command -v "$LAMMPS_EXE" >/dev/null 2>&1; then
+    echo "Error: $LAMMPS_EXE not found in PATH" >&2
+    echo "Please install LAMMPS or set LAMMPS_EXE environment variable" >&2
     exit 1
 fi
 

@@ -1,9 +1,57 @@
 #!/bin/bash
 # === run-DFT.sh ===
-# Usage: ./run-DFT.sh <material> <structure>
+# SIESTA DFT calculation automation script
+#
+# DESCRIPTION:
+#   Automates the setup and execution of SIESTA DFT calculations for 2D materials.
+#   Handles pseudopotential selection, input file generation, and strain series calculations.
+#
+# USAGE:
+#   ./run-DFT.sh <material> <structure>
+#
+# ARGUMENTS:
+#   material   - Material name (MoS2, MoSe2, WS2, WSe2)
+#   structure  - Structure type (1x1_primitive, 1x10_rectangular, etc.)
+#
+# EXAMPLES:
+#   ./run-DFT.sh MoS2 1x1_primitive      # Single unit cell calculation
+#   ./run-DFT.sh MoS2 1x10_rectangular   # 1x10 supercell calculation
+#
+# OUTPUT:
+#   Creates calculation directories in siesta/materials/{material}/Monolayer/{structure}/
+#   Each strain point gets its own subdirectory with complete input files
+#
+# REQUIREMENTS:
+#   - SIESTA executable in PATH
+#   - Pseudopotential files in siesta/pseudopotentials/
+#   - Template files in siesta/io_templates/
+#
+# AUTHOR: Dr. Meshal Alawein (meshal@berkeley.edu)
+# INSTITUTION: University of California, Berkeley
+
+set -e  # Exit on error
+
+# Load configuration
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/config.sh"
+
+# Check for required arguments
+if [[ $# -lt 2 ]]; then
+    echo "Error: Missing required arguments"
+    echo "Usage: $0 <material> <structure>"
+    echo "Example: $0 MoS2 1x10_rectangular"
+    exit 1
+fi
 
 material="$1"
 structure="$2"
+
+# Check for SIESTA executable
+if ! command -v "$SIESTA_EXE" >/dev/null 2>&1; then
+    echo "Error: SIESTA executable ($SIESTA_EXE) not found in PATH"
+    echo "Please install SIESTA or set SIESTA_EXE environment variable"
+    exit 1
+fi
 
 supercell="$structure"
 type="Monolayer"
@@ -17,18 +65,26 @@ LDOSRun="T"
 partition="2"
 strains=("0")
 
-targetDir="siesta/materials/$material/$type/$structure/$supercell"
-template_io="siesta/io_templates"
-pseudopath="siesta/pseudopotentials"
+targetDir="$QMATSIM_SIESTA_DIR/materials/$material/$type/$structure/$supercell"
+template_io="$QMATSIM_SIESTA_DIR/io_templates"
+pseudopath="$QMATSIM_SIESTA_DIR/pseudopotentials"
 
+# Function to copy pseudopotential files for a given material
+# Arguments: material functional soc_flag
 copy_material_files() {
     local mat="$1"; local func="$2"; local soc="$3"
+    
+    # Map materials to their constituent elements
     case $mat in
-        MoS2) ext1="Mo"; ext2="S";;
-        MoSe2) ext1="Mo"; ext2="Se";;
-        WS2) ext1="W"; ext2="S";;
-        WSe2) ext1="W"; ext2="Se";;
-        *) echo "Unknown material $mat"; exit 1;;
+        MoS2) ext1="Mo"; ext2="S";;        # Molybdenum disulfide
+        MoSe2) ext1="Mo"; ext2="Se";;      # Molybdenum diselenide  
+        WS2) ext1="W"; ext2="S";;          # Tungsten disulfide
+        WSe2) ext1="W"; ext2="Se";;        # Tungsten diselenide
+        *) 
+            echo "Error: Unknown material '$mat'"
+            echo "Supported materials: MoS2, MoSe2, WS2, WSe2"
+            exit 1
+            ;;
     esac
 
     if [ "$soc" = "T" ]; then
