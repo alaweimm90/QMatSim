@@ -1,21 +1,23 @@
-# QMatSim: Multiscale DFT + MD Simulation Framework
+# QMatSim: Advanced Strain Engineering Framework for 2D Quantum Materials
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python](https://img.shields.io/badge/Python-3.9+-green.svg)](https://www.python.org/)
 [![SIESTA](https://img.shields.io/badge/SIESTA-4.1+-blue.svg)](https://siesta-project.org/siesta/)
 [![LAMMPS](https://img.shields.io/badge/LAMMPS-stable-red.svg)](https://www.lammps.org/)
+[![Physical Review Materials](https://img.shields.io/badge/Phys.Rev.Materials-2025-brightgreen.svg)](https://journals.aps.org/prmaterials/)
 [![Tests](https://img.shields.io/badge/Tests-Passing-brightgreen.svg)](#testing--validation)
 
-*A comprehensive multiscale quantum materials simulation framework combining Density Functional Theory (DFT) and Molecular Dynamics (MD) — engineered for 2D materials research with HPC cluster integration and automated strain engineering.*
+*A cutting-edge multiscale simulation framework for strain-induced quantum phenomena in 2D materials — implementing advanced DFT + MD workflows with automated strain engineering to discover flat bands, lateral heterostructures, and emergent electronic phases in transition metal dichalcogenides.*
 
-**Core simulation capabilities (fully implemented):**
+**Core scientific capabilities (fully implemented):**
 
-- **DFT Integration**: SIESTA-based electronic structure calculations with strain engineering
-- **MD Integration**: LAMMPS-based molecular dynamics for thermal transport and deformation
-- **Strain Engineering**: Automated supercell generation and systematic strain studies
-- **HPC Workflows**: SLURM job submission and cluster-ready batch processing
-- **Cross-Platform Analysis**: Python, MATLAB, and Mathematica postprocessing tools
-- **CLI Automation**: Unified command-line interface for all simulation workflows
+- **Strain-Induced Physics**: Flat band emergence, hole localization, and lateral heterostructure formation
+- **Electronic Structure**: Advanced DFT calculations with spin-orbit coupling and strain-dependent band engineering
+- **Mechanical Deformation**: LAMMPS-based rippling, compression, and systematic strain protocols
+- **Quantum Materials**: TMDCs (MoS₂, MoSe₂, WS₂, WSe₂) with comprehensive pseudopotential libraries
+- **Multiscale Integration**: Seamless DFT-to-MD workflows for strain-electronic property correlations
+- **HPC-Ready Automation**: SLURM integration with intelligent resource allocation and batch processing
+- **Advanced Analysis**: Band structure engineering, LDOS mapping, and strain-dependent phase transitions
 
 **Author**: Dr. Meshal Alawein ([meshal@berkeley.edu](mailto:meshal@berkeley.edu))  
 **Institution**: University of California, Berkeley  
@@ -25,16 +27,23 @@
 
 ## Project Overview
 
-**QMatSim** is a research-grade multiscale simulation toolkit designed to unify quantum and classical simulation workflows for 2D materials and nanostructures. Developed for HPC environments and academic workflows, it tightly integrates DFT (SIESTA) and MD (LAMMPS), providing robust analysis tools and automated strain engineering capabilities.
+**QMatSim** implements the computational framework from "Strain-induced lateral heterostructures: Hole localization and the emergence of flat bands in rippled MoS₂ monolayers" (Alawein et al., Physical Review Materials 2025). This research-grade multiscale toolkit enables the discovery of strain-induced quantum phenomena in 2D materials through systematic DFT + MD simulations, revealing how mechanical deformation drives electronic phase transitions and emergent flat band physics in transition metal dichalcogenides.
+
+<p align="center">
+  <img src="docs/images/qmatsim_overview.png" alt="QMatSim Strain Engineering Framework" width="800"/>
+  <br/>
+  <em>Strain-induced flat band emergence and lateral heterostructure formation in rippled MoS₂</em>
+</p>
 
 ### Key Features
 
-🧮 **DFT + MD Integration**: Seamless SIESTA and LAMMPS workflow coupling  
-🧱 **Automated Strain Engineering**: Systematic supercell generation and deformation studies  
-⚙️ **HPC Ready**: SLURM job submission with optimized resource allocation  
-📊 **Multi-Platform Analysis**: Python, MATLAB, and Mathematica postprocessing  
-🔧 **Comprehensive CLI**: All workflows accessible via unified `qmatsim` command  
-🧪 **Materials Database**: Extensive pseudopotential libraries (GGA, LDA, GGA-SOC)  
+🔬 **Strain-Induced Quantum Physics**: Automated discovery of flat bands and lateral heterostructures  
+⚛️ **Advanced Electronic Structure**: DFT calculations with SOC for accurate band engineering  
+🌊 **Mechanical Deformation Protocols**: Systematic rippling and compression strain studies  
+🧮 **Multiscale Integration**: Seamless DFT-MD coupling for strain-electronic correlations  
+⚙️ **HPC-Optimized Workflows**: SLURM automation with intelligent resource management  
+📊 **Publication-Ready Analysis**: Advanced band structure and LDOS visualization tools  
+🧪 **TMDC Materials Focus**: Complete libraries for MoS₂, MoSe₂, WS₂, WSe₂ systems  
 
 ---
 
@@ -61,14 +70,14 @@ qmatsim --help
 
 ### Basic Usage
 ```bash
-# ➤ DFT Relaxation (SIESTA)
+# ➤ Strain-Induced Electronic Structure (DFT)
 qmatsim relax --material MoS2 --structure 1x10_rectangular
 
-# ➤ MD Simulation (LAMMPS)
+# ➤ Mechanical Deformation Studies (MD)
 qmatsim minimize --structure ripple10 --mode compress
 qmatsim minimize --structure ripple10 --mode all
 
-# ➤ Postprocessing Analysis
+# ➤ Flat Band Discovery & Analysis
 qmatsim analyze --material MoS2 --structure 1x10_rectangular
 ```
 
@@ -76,25 +85,26 @@ qmatsim analyze --material MoS2 --structure 1x10_rectangular
 
 ## Scientific Modules
 
-### Core Simulation Engine
-- **SIESTA Integration**: Complete DFT workflow with pseudopotential management
-- **LAMMPS Integration**: MD simulations with multiple potential support
-- **Strain Engineering**: Automated lattice deformation and supercell generation
+### Strain Engineering Engine
+- **QMatSim Core**: Advanced strain-dependent electronic structure calculations
+- **Flat Band Discovery**: Automated detection of strain-induced flat band emergence
+- **Lateral Heterostructures**: Systematic mapping of strain-driven phase boundaries
 
-### Materials Database
-- **Pseudopotentials**: Complete elemental coverage (GGA, LDA, GGA-SOC functionals)
-- **Structure Templates**: Primitive and rectangular supercell configurations
-- **Material Support**: MoS₂, MoSe₂, WS₂, WSe₂ transition metal dichalcogenides
+### Quantum Materials Database
+- **TMDC Libraries**: Complete MoS₂, MoSe₂, WS₂, WSe₂ material parameters
+- **Pseudopotentials**: GGA, LDA, and GGA-SOC functionals with spin-orbit coupling
+- **Strain Templates**: Pre-configured ripple geometries and compression protocols
 
-### HPC Workflows
-- **SLURM Integration**: Automated job submission and resource management
-- **Batch Processing**: Parallel strain studies and parameter sweeps
-- **Error Handling**: Robust failure recovery and job monitoring
+### Multiscale Physics Solvers
+- **Electronic Structure**: SIESTA-based DFT with advanced k-point sampling
+- **Mechanical Deformation**: LAMMPS MD with realistic interatomic potentials
+- **Coupling Protocols**: Automated strain transfer from MD to DFT calculations
 
-### Analysis Tools
-- **Electronic Structure**: Band structure, LDOS, and PDOS analysis
-- **Mechanical Properties**: Stress-strain relationships and elastic constants
-- **Cross-Platform**: Python/MATLAB/Mathematica analysis pipelines
+### Advanced Analysis Suite
+- **Band Structure Engineering**: Strain-dependent dispersion and flat band tracking
+- **Hole Localization**: Spatial distribution analysis of strain-induced states
+- **Phase Transition Mapping**: Systematic characterization of electronic phase boundaries
+- **Publication Tools**: Berkeley-themed visualization with publication-quality figures
 
 ---
 
@@ -171,10 +181,11 @@ python -m qmatsim --help
 ```
 
 ### Validation Examples
-- **Electronic Structure**: Band structure calculations for MoS₂ monolayers
-- **Strain Engineering**: Systematic deformation studies up to 20% strain
-- **Thermal Transport**: MD-based thermal conductivity calculations
-- **Interface Physics**: Heterostructure modeling and charge transfer
+- **Flat Band Physics**: Strain-induced flat band emergence in rippled MoS₂ (reproduces Phys. Rev. Materials 2025)
+- **Lateral Heterostructures**: Hole localization and electronic phase transitions
+- **Strain Engineering**: Systematic deformation studies with up to 20% applied strain
+- **Spin-Orbit Effects**: SOC-dependent band structure modifications in TMDCs
+- **Multiscale Coupling**: DFT-MD correlation studies for strain-electronic property relationships
 
 ---
 
@@ -192,8 +203,19 @@ python -m qmatsim --help
 If you use QMatSim in your research, please cite:
 
 ```bibtex
+@article{alawein2025strain,
+  title={Strain-induced lateral heterostructures: Hole localization and the emergence of flat bands in rippled MoS 2 monolayers},
+  author={Alawein, Meshal and Ager, Joel W and Javey, Ali and Chrzan, DC},
+  journal={Physical Review Materials},
+  volume={9},
+  number={2},
+  pages={L021002},
+  year={2025},
+  publisher={APS}
+}
+
 @software{qmatsim2025,
-  title={QMatSim: Multiscale DFT + MD Simulation Framework},
+  title={QMatSim: Advanced Strain Engineering Framework for 2D Quantum Materials},
   author={Alawein, Dr. Meshal},
   year={2025},
   url={https://github.com/alaweimm90/QMatSim},

@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "QMatSim"
 version = "0.1.0"
-description = "Multiscale DFT + MD simulation framework for quantum materials"
+description = "Advanced strain engineering framework for discovering flat bands and lateral heterostructures in 2D quantum materials"
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
@@ -14,7 +14,7 @@ authors = [
 maintainers = [
     {name = "Dr. Meshal Alawein", email = "meshal@berkeley.edu"}
 ]
-keywords = ["dft", "molecular-dynamics", "materials-science", "siesta", "lammps", "quantum-materials"]
+keywords = ["strain-engineering", "flat-bands", "quantum-materials", "2d-materials", "dft", "siesta", "lammps", "tmdc", "lateral-heterostructures"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",

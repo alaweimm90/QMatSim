@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-QMatSim is a multiscale quantum materials simulation framework that combines Density Functional Theory (DFT) via SIESTA and Molecular Dynamics (MD) via LAMMPS. It's designed for 2D materials research with HPC cluster integration.
+QMatSim is an advanced strain engineering framework for discovering flat bands and lateral heterostructures in 2D quantum materials. Based on research published in Physical Review Materials (2025), it combines DFT (SIESTA) and MD (LAMMPS) to systematically study strain-induced quantum phenomena in transition metal dichalcogenides, with focus on flat band emergence and hole localization in rippled structures.
 
 ## Development Commands
 

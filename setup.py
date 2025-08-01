@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name="QMatSim",
     version="0.1.0",
-    description="Modular multiscale DFT + MD simulation framework",
+    description="Advanced strain engineering framework for 2D quantum materials",
     author="Meshal Alawein",
     packages=find_packages(),
     include_package_data=True,
