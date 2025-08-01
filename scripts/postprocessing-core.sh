@@ -1,12 +1,26 @@
 #!/bin/bash
+# === postprocessing-core.sh ===
+# Core postprocessing script for SIESTA calculations
+# This script is generated from a template
+
+set -e  # Exit on error
+
+# Load configuration
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/config.sh"
 
 shopt -s extglob
 shopt -s expand_aliases
 
-module load anaconda3
+# Optional: Load conda/modules if available
+if command -v module >/dev/null 2>&1; then
+    module load anaconda3 2>/dev/null || true
+fi
 
-conda init
-conda activate siesta-env
+if command -v conda >/dev/null 2>&1; then
+    conda init 2>/dev/null || true
+    conda activate siesta-env 2>/dev/null || echo "Warning: siesta-env conda environment not found"
+fi
 
 ########################################################################
 ############################## INITIALIZATION ##########################
@@ -1003,13 +1017,28 @@ echo "Default M=$M, N=$N values written to MN_values.txt"
 
      if [ $type == "Monolayer" -a $structure == "primitive" ];
         then
-            cp ~/SIESTA/Utilities/MATLAB/hexagonalContour-Monolayer.m contour.m
+            matlab_contour="$MATLAB_UTILITIES/hexagonalContour-Monolayer.m"
+            if [[ -f "$matlab_contour" ]]; then
+                cp "$matlab_contour" contour.m
+            else
+                echo "Warning: MATLAB contour script not found: $matlab_contour" >&2
+            fi
         elif [ $type == "Bulk" -a $structure == "primitive" ];
         then 
-            cp ~/SIESTA/Utilities/MATLAB/hexagonalContour-Bulk.m contour.m
+            matlab_contour="$MATLAB_UTILITIES/hexagonalContour-Bulk.m"
+            if [[ -f "$matlab_contour" ]]; then
+                cp "$matlab_contour" contour.m
+            else
+                echo "Warning: MATLAB contour script not found: $matlab_contour" >&2
+            fi
         elif [ $type == "Monolayer" -a $structure == "rectangular" ];
         then
-            cp ~/SIESTA/Utilities/MATLAB/rectangularContour-Monolayer.m contour.m        
+            matlab_contour="$MATLAB_UTILITIES/rectangularContour-Monolayer.m"
+            if [[ -f "$matlab_contour" ]]; then
+                cp "$matlab_contour" contour.m
+            else
+                echo "Warning: MATLAB contour script not found: $matlab_contour" >&2
+            fi        
      fi
 
         matlab -nodisplay -nosplash -nodesktop < contour.m
@@ -1039,7 +1068,12 @@ cp ../../../1-Relaxation/*.DM .
 cp ../../../1-Relaxation/*.STRUCT_OUT .
 cp $material.STRUCT_OUT $material.STRUCT_IN
 
-cp ~/SIESTA/materials/$material/$type/$structure/pathTemp.txt .
+pathtemp_file="$QMATSIM_SIESTA_DIR/materials/$material/$type/$structure/pathTemp.txt"
+if [[ -f "$pathtemp_file" ]]; then
+    cp "$pathtemp_file" .
+else
+    echo "Warning: pathTemp.txt not found: $pathtemp_file" >&2
+fi
 mv ../pathCBM.txt .
 sed '/block BandLines/!b;:a;$b;N;/endblock BandLines/!ba;P;s/.*\n//;e cat pathCBM.txt' pathTemp.txt > pathCBM.tmp
 sed -ne '/%block BandLines/ {r ./'pathCBM'.tmp' -e ':a; n; /%endblock BandLines.*/ {b}; ba}; p' ../../../3-Bands/3-Bands.fdf > 3-Bands-CBM.fdf
@@ -1088,7 +1122,12 @@ cp ../../../1-Relaxation/*.DM .
 cp ../../../1-Relaxation/*.STRUCT_OUT .
 cp $material.STRUCT_OUT $material.STRUCT_IN
 
-cp ~/SIESTA/materials/$material/$type/$structure/pathTemp.txt .
+pathtemp_file="$QMATSIM_SIESTA_DIR/materials/$material/$type/$structure/pathTemp.txt"
+if [[ -f "$pathtemp_file" ]]; then
+    cp "$pathtemp_file" .
+else
+    echo "Warning: pathTemp.txt not found: $pathtemp_file" >&2
+fi
 mv ../pathVBM.txt .
 sed '/block BandLines/!b;:a;$b;N;/endblock BandLines/!ba;P;s/.*\n//;e cat pathVBM.txt' pathTemp.txt > pathVBM.tmp
 sed -ne '/%block BandLines/ {r ./'pathVBM'.tmp' -e ':a; n; /%endblock BandLines.*/ {b}; ba}; p' ../../../3-Bands/3-Bands.fdf > 3-Bands-VBM.fdf
@@ -1138,7 +1177,12 @@ cp ../../../1-Relaxation/*.DM .
 cp ../../../1-Relaxation/*.STRUCT_OUT .
 cp $material.STRUCT_OUT $material.STRUCT_IN
 
-cp ~/SIESTA/materials/$material/$type/$structure/pathTemp.txt .
+pathtemp_file="$QMATSIM_SIESTA_DIR/materials/$material/$type/$structure/pathTemp.txt"
+if [[ -f "$pathtemp_file" ]]; then
+    cp "$pathtemp_file" .
+else
+    echo "Warning: pathTemp.txt not found: $pathtemp_file" >&2
+fi
 mv ../pathG.txt .
 sed '/block BandLines/!b;:a;$b;N;/endblock BandLines/!ba;P;s/.*\n//;e cat pathG.txt' pathTemp.txt > pathG.tmp
 sed -ne '/%block BandLines/ {r ./'pathG'.tmp' -e ':a; n; /%endblock BandLines.*/ {b}; ba}; p' ../../../3-Bands/3-Bands.fdf > 3-Bands-G.fdf
@@ -1192,7 +1236,12 @@ cp ../../../1-Relaxation/*.DM .
 cp ../../../1-Relaxation/*.STRUCT_OUT .
 cp $material.STRUCT_OUT $material.STRUCT_IN
 
-cp ~/SIESTA/materials/$material/$type/$structure/pathTemp.txt .
+pathtemp_file="$QMATSIM_SIESTA_DIR/materials/$material/$type/$structure/pathTemp.txt"
+if [[ -f "$pathtemp_file" ]]; then
+    cp "$pathtemp_file" .
+else
+    echo "Warning: pathTemp.txt not found: $pathtemp_file" >&2
+fi
 mv ../pathK.txt .
 sed '/block BandLines/!b;:a;$b;N;/endblock BandLines/!ba;P;s/.*\n//;e cat pathK.txt' pathTemp.txt > pathK.tmp
 sed -ne '/%block BandLines/ {r ./'pathK'.tmp' -e ':a; n; /%endblock BandLines.*/ {b}; ba}; p' ../../../3-Bands/3-Bands.fdf > 3-Bands-K.fdf
@@ -2094,7 +2143,13 @@ mv Grid.cube VT.cube
 g2c_ng -n 1 -s $material.STRUCT_OUT -g $material.VNA
 mv Grid.cube VNA.cube
 
-cp ~/SIESTA/Utilities/Python/cube2xyz.py .
+if [[ -f "$CUBE2XYZ_SCRIPT" ]]; then
+    cp "$CUBE2XYZ_SCRIPT" .
+elif [[ -f "$QMATSIM_SIESTA_DIR/python-utilities/cube2xyz.py" ]]; then
+    cp "$QMATSIM_SIESTA_DIR/python-utilities/cube2xyz.py" .
+else
+    echo "Warning: cube2xyz.py script not found" >&2
+fi
 
 python cube2xyz.py -f LDOS.cube -o LDOS.xyz -A &
 python cube2xyz.py -f RHO.cube -o RHO.xyz -A &
@@ -2518,7 +2573,11 @@ sed -i "s|NatomsVAR|${NatomsVAR}|" findsym_sample.in
 sed -i "s|atomTypesVAR|${atomTypesVAR}|" findsym_sample.in
 awk -v var="$atomsPositionsVAR" '{gsub("atomsPositionsVAR", var)}1' findsym_sample.in > temp && mv temp findsym_sample.in
 
-~/bin/findsym findsym_sample.in > $material-symmetrized.cif
+if command -v "$FINDSYM_EXE" >/dev/null 2>&1; then
+    "$FINDSYM_EXE" findsym_sample.in > "$material-symmetrized.cif"
+else
+    echo "Warning: FINDSYM executable not found, skipping symmetry analysis" >&2
+fi
 
 awk '/_atom_site_fract_symmform/{flag=1; next} flag{print $2, $5, $6, $7}' $material-symmetrized.cif > $material.tmp
 awk '{ if ($1 == 2) { $1 = "2 16" } else if ($1 == 1) { $1 = "1 42" } print }' $material.tmp > $material.modified.tmp
