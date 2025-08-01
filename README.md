@@ -1,4 +1,4 @@
-# QMatSim: Advanced Strain Engineering Framework for 2D Quantum Materials
+# QMatSim: Advanced Quantum Materials Simulations Framework
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python](https://img.shields.io/badge/Python-3.9+-green.svg)](https://www.python.org/)
