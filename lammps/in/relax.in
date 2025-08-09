@@ -5,8 +5,8 @@ boundary p p f                                                                # 
 atom_style atomic                                                             # Style of atoms
 
 # Neighbor Settings
-neighbor 1.0 bin                                                              # Neighbor binning for efficiency
-neigh_modify delay 5 every 1                                                  # Neighbor list update settings
+neighbor 1.0 bin                                                              # Neighbor list skin distance for efficiency
+neigh_modify delay 5 every 1                                                  # Update neighbor list every step after 5 delay steps
 
 ############################ System definition ############################
 read_data 1x10_rectangular.data                                                           # Read data file
@@ -39,8 +39,8 @@ write_dump all atom final_relaxed_fixed_cell.dump                              #
 
 ######################### Thermodynamic Outputs #########################
 variable Nprint equal 100                                                      # Frequency of thermodynamic output
-thermo ${Nprint}                                                               # Output thermodynamic info every Nprint steps
-thermo_style custom step temp press pe ke etotal lx ly lz vol fnorm            # Output thermodynamic info
-thermo_modify lost error flush yes                                             # Modify thermo settings
+thermo ${Nprint}                                                               # Output thermodynamic data every Nprint steps
+thermo_style custom step temp press pe ke etotal lx ly lz vol fnorm            # Custom thermodynamic output format
+thermo_modify lost error flush yes                                             # Error handling and output flushing
 
 print "Simulation Complete"                                                    # Completion message

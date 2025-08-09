@@ -39,9 +39,9 @@ if command -v python3 >/dev/null 2>&1; then
     python_version=$(python3 --version 2>&1)
     echo "✅ Python found: $python_version"
     
-    # Try to import qmatsim
+    # Try to import qmatsim package
     if python3 -c "import qmatsim" 2>/dev/null; then
-        echo "✅ QMatSim Python package is installed"
+        echo "✅ QMatSim Python package is installed and importable"
     else
         echo "⚠️  QMatSim Python package not found"
         echo "   Run: pip install -e . from the project root"

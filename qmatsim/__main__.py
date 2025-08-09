@@ -12,6 +12,7 @@ def get_project_root() -> Path:
     return Path(__file__).parent.parent
 
 def validate_file_exists(file_path: Path, description: str) -> bool:
+    """Check if required file exists and provide helpful error messages."""
     if not file_path.exists():
         print(f"❌ Missing {description}: {file_path}")
         print(f"   Please ensure the file exists or check your project structure")
@@ -26,7 +27,7 @@ def run_script_safely(script_path: str, args: list, description: str) -> None:
         sys.exit(1)
     
     try:
-        # Change to project root directory
+        # Change to project root directory for script execution
         original_cwd = os.getcwd()
         os.chdir(project_root)
         
