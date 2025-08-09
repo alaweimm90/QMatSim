@@ -3,16 +3,7 @@ import glob
 from typing import List, Dict
 
 def struct_to_poscar(filename: str, material: str) -> str:
-    """
-    Convert SIESTA STRUCT_IN file to VASP POSCAR format.
-    
-    Args:
-        filename (str): Path to the STRUCT_IN file
-        material (str): Material name (e.g., 'MoS2', 'WSe2')
-    
-    Returns:
-        str: POSCAR file content
-    """
+    """Convert SIESTA STRUCT_IN to VASP POSCAR format."""
     # Dictionary for atomic numbers and symbols
     atomic_numbers = {
         '42': 'Mo',

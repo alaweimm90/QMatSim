@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# __main__.py — Main CLI entry point for QMatSim framework
 
 import argparse
 import os
@@ -10,11 +9,9 @@ from typing import Optional
 
 # ---- Utilities ----
 def get_project_root() -> Path:
-    """Get the project root directory."""
     return Path(__file__).parent.parent
 
 def validate_file_exists(file_path: Path, description: str) -> bool:
-    """Validate that a required file exists."""
     if not file_path.exists():
         print(f"❌ Missing {description}: {file_path}")
         print(f"   Please ensure the file exists or check your project structure")
@@ -22,7 +19,6 @@ def validate_file_exists(file_path: Path, description: str) -> bool:
     return True
 
 def run_script_safely(script_path: str, args: list, description: str) -> None:
-    """Run a bash script with proper error handling."""
     project_root = get_project_root()
     script_full_path = project_root / script_path
     
@@ -61,13 +57,11 @@ def run_script_safely(script_path: str, args: list, description: str) -> None:
 
 # ---- DFT ----
 def run_dft(args):
-    """Run SIESTA DFT simulation."""
     print(f"🔬 Starting DFT relaxation for {args.material} ({args.structure})")
     run_script_safely("scripts/run-DFT.sh", [args.material, args.structure], "DFT simulation")
 
 # ---- MD ----
 def run_md(args):
-    """Run LAMMPS MD simulation."""
     structure = args.structure
     mode = args.mode
     project_root = get_project_root()
@@ -110,13 +104,11 @@ def run_md(args):
 
 # ---- Postprocessing ----
 def run_post(args):
-    """Run DFT postprocessing analysis."""
     print(f"📊 Starting postprocessing analysis for {args.material} ({args.structure})")
     run_script_safely("scripts/run-postprocessing.sh", [args.material, args.structure], "Postprocessing analysis")
 
 # ---- CLI Entrypoint ----
 def main():
-    """Main CLI entry point."""
     parser = argparse.ArgumentParser(
         description="QMatSim CLI — Multiscale DFT + MD toolkit",
         formatter_class=argparse.RawDescriptionHelpFormatter,
