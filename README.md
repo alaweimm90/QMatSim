@@ -1,4 +1,4 @@
-# QMatSim: Advanced Strain Engineering Framework for 2D Quantum Materials
+# QMatSim: Advanced Strain Engineering Framework for 2D Quantum Materials 
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
@@ -205,5 +205,6 @@ University of California, Berkeley
 </div>
 
 ---
+
 
 *Making computational materials science more accessible.*
